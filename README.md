@@ -62,7 +62,7 @@
         - Load data to BigQuery
 
 ### 03_deployments:
-- Parameterizing Flow & Deployment with ETL Integration into GCS Workflow
+- Parameterizing Flow & Deployment with ETL Integration into GCS Workflow `Web -> Local -> GCS`
     - Main-flows:
         - Loop through a set of months to perform a series of operations on the data for each month
     - Sub-flow:
