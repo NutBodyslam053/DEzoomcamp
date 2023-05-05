@@ -72,9 +72,10 @@ if __name__=='__main__':
     parser.add_argument('--db', help='database name for postgres')
     parser.add_argument('--table_name', help='name of table where we will write the results to')
     parser.add_argument('--url', help='url of the file')
-    
+
     args = parser.parse_args()
     main(args)
 
 
-# Ex.) python ingest-data.py --user=root --password=root --host=localhost --port=5431 --db=postgres --table_name=yellow_taxi_data --url="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
+# Step_0: Run docker-compose.yaml first!
+# Step_1: python ingest-data.py --user=root --password=root --host=localhost --port=5431 --db=postgres --table_name=yellow_taxi_data --url="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
