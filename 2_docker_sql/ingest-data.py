@@ -25,7 +25,6 @@ def main(params):
 
     # Import CSV file into Pandas Dataframe.
     df_iter = pd.read_csv(csv_name, dtype={'store_and_fwd_flag': 'str'}, iterator=True, chunksize=100000)
-
     df = next(df_iter)
 
     times, df_size = 0, 0
@@ -48,7 +47,7 @@ def main(params):
     print('{:,} rows added to the database, elapsed time: {:.3f} second.'.format(df_size, times))
 
     # Add the remaining chunks to the database.
-    for i, df in enumerate(df_iter):
+    for df in df_iter:
         t_start = time()
 
         df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
@@ -57,17 +56,15 @@ def main(params):
         df.to_sql(name=table_name, con=engine, if_exists='append', index=False)
 
         t_end = time()
-
         times += t_end-t_start
         df_size += len(df)
 
         print('{:,} rows added to the database, elapsed time: {:.3f} seconds.'.format(df_size, times))
 
-    print('Data ingestion complete!')
+    print('Complete!')
 
 if __name__=='__main__':
     parser = argparse.ArgumentParser(description='Ingest Parquet data to Postgres database')
-
     parser.add_argument('--user', help='user name for postgres')
     parser.add_argument('--password', help='password for postgres')
     parser.add_argument('--host', help='host for postgres')
@@ -75,9 +72,8 @@ if __name__=='__main__':
     parser.add_argument('--db', help='database name for postgres')
     parser.add_argument('--table_name', help='name of table where we will write the results to')
     parser.add_argument('--url', help='url of the file')
-
+    
     args = parser.parse_args()
-
     main(args)
 
 
