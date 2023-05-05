@@ -16,8 +16,8 @@
     - set up Database = "ny_taxi", Username = "postgres", Password = "root", Host = "localhost", Port = 5432
     - python ingest-data-prefect.py
 
-- 01_start: Using Prefect
-    - Ingesting data into a PostgreSQL database running on local
+- 01_start: PostgreSQL & Prefect
+    - Ingesting data into a PostgreSQL database running on local - [Web -> PostgreSQL]
         - Main-flows:
             - Extract data
             - Transform data
