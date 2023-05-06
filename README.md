@@ -1,5 +1,5 @@
 ## 2_docker_sql
-- Ingesting data into a PostgreSQL database running on Docker :: `Web -> PostgreSQL`
+- Ingesting data into a PostgreSQL database running on Docker :: [ *Web -> PostgreSQL* ]
 
 ## 3_prefect_gcp
 
@@ -42,7 +42,7 @@
         - set up ImagePullPolicy = ALWAYS
 
 ### 01_start
-- Ingesting data into a PostgreSQL database running on Local :: `Web -> PostgreSQL`
+- Ingesting data into a PostgreSQL database running on Local :: [ *Web -> PostgreSQL* ]
     - Main-flows:
         - Extract data from a data source
         - Transform data
@@ -51,7 +51,7 @@
         - Print table name
 
 ### 02_gcp
-- ETL workflow :: `Web -> Local -> GCS -> BigQuery`
+- ETL workflow :: [ *Web -> Local -> GCS -> BigQuery* ]
     - Main-flows:
         - Fetch data from a data source
         - Clean data
