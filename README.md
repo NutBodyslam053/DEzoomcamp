@@ -1,22 +1,22 @@
 ## 2_docker_sql
-- Ingesting data into a PostgreSQL database running on Docker
-    - Docker-compose: Generate a PostgreSQL database & PgAdmin4
+- Ingesting data into a PostgreSQL database running on Docker :: `Web -> PostgreSQL`
 
 ## 3_prefect_gcp
 
-### 00_prepare: Set up environments
-- Google Cloud Platform:
-    - Cloud Storage -> create `Buckets` = "dtc_data_lake_datatalksclub-376515"
-    - IAM & Admin -> create `Service Accounts` = "zoom-de-service-acct" 
-    - set up Grant this service account.. -> add Role = ["BigQuery Admin", "Storage Admin"]
-    - generate KEYS -> create new key = JSON (<gcs_key.json> will be automatically downloaded)
-- BigQuery:
-    - Explorer -> add data -> choose Google Cloud Storage
-    - set up Source -> browse file from GCS bucket, File format = "Parquet"
-    - set up Destination -> Dataset = "dezoomcamp", Table = "rides"
-    - QUERY Editor -> DELETE FROM <project_id.dataset_name.table_name> WHERE TRUE; (clear up the data)
+### 00_setup
+- Google Cloud Platform (GCP):
+    - Google Cloud Storage (GCS):
+        - Cloud Storage -> create `Buckets` = "dtc_data_lake_datatalksclub-376515"
+        - IAM & Admin -> create `Service Accounts` = "zoom-de-service-acct" 
+        - set up Grant this service account.. -> add Role = ["BigQuery Admin", "Storage Admin"]
+        - generate `KEYS` -> create new key = JSON (<gcs_key.json> will be automatically downloaded)
+    - BigQuery:
+        - Explorer -> add data -> choose Google Cloud Storage
+        - set up Source -> browse file from GCS bucket, File format = "Parquet"
+        - set up Destination -> Dataset = "dezoomcamp", Table = "rides"
+        - QUERY Editor -> DELETE FROM <project_id.dataset_name.table_name> WHERE TRUE; (clear up the data)
 - Local:
-    - create data/yellow folder
+    - create `data/yellow` folder
     - conda create -n `zoom` python=3.9
     - conda activate `zoom`
     - pip install -r requirements.txt
@@ -27,7 +27,7 @@
         - set up Block Name = "postgres-connector"
         - set up Driver -> SyncDriver = postgresql+psycopg2
         - set up Database = "ny_taxi", Username = "postgres", Password = "root", Host = "localhost", Port = 5432
-    - Google Cloud Platform:
+    - Google Cloud Platform (GCP):
         - Blocks -> add `GCP Credentials`
         - set up Block Name = "zoom-gcs-creds"
         - set up Service Account Info = <gcs_key.json>
@@ -41,8 +41,8 @@
         - set up Image = "nutbodyslam053/etl_prefect:zoom" (Image name from Docker Hub)
         - set up ImagePullPolicy = ALWAYS
 
-### 01_start: PostgreSQL & Prefect
-- Ingesting data into a PostgreSQL database running on local :: `Web -> PostgreSQL`
+### 01_start
+- Ingesting data into a PostgreSQL database running on Local :: `Web -> PostgreSQL`
     - Main-flows:
         - Extract data from a data source
         - Transform data
@@ -50,7 +50,7 @@
     - Sub-flow:
         - Print table name
 
-### 02_gcp: Google Cloud Platform (GCP) & Prefect
+### 02_gcp
 - ETL workflow :: `Web -> Local -> GCS -> BigQuery`
     - Main-flows:
         - Fetch data from a data source
@@ -61,16 +61,8 @@
         - Transform data
         - Load data to BigQuery
 
-### 03_deployments:
-- Parameterizing Flow & Deployment with ETL Integration into GCS Workflow `Web -> Local -> GCS`
-    - Main-flows:
-        - Loop through a set of months to perform a series of operations on the data for each month
-    - Sub-flow:
-        - Fetch data from a data source
-        - Clean data
-        - Write data to a local repository
-        - Upload data to GCS
-- Deployment Process
+### 03_deployments
+- Parameterizing Flow & Deployments
     - Using CLI
     ```Python
     # Build a flow code file named `xxx-deployment.yaml`
